@@ -2,6 +2,9 @@ var canvas;
 let sliderL;
 let sliderT;
 let sliderF;
+let sliderB;
+
+let fracType;
 
 
 function windowResized() {
@@ -11,7 +14,8 @@ function windowResized() {
 
 function setup() {
 
-  sliderL = createSlider(10, 500, 250, 10);
+  // Sliders for Tree settings
+  sliderL = createSlider(10, 300, 250, 10);
   sliderL.position(75, 5);
 
   sliderT = createSlider(0.01, PI, PI / 2, PI / 128);
@@ -20,6 +24,20 @@ function setup() {
   sliderF = createSlider(0, 0.8, 0.5, 0.001);
   sliderF.position(75,40);
 
+  sliderB = createSlider(2, 4, 2, 1);
+  sliderB.position(75, 52.5);
+
+
+  //Radio buttons to Change fractal types
+  // fracType = createRadio('radio');
+  // fracType.style('color', 'white');
+  // fracType.style('width', '50px');
+  // fracType.style('right', '50px');
+  // fracType.option('Tree', 1);
+  // fracType.option('2', 2);
+  // fracType.value(1);
+
+  // create canvas that encapsules webpage
   var myHeight = document.documentElement.scrollHeight;
   canvas = createCanvas(windowWidth, myHeight);
   canvas.position(0, 0);
@@ -27,38 +45,97 @@ function setup() {
   canvas.style('position', 'absolute');
   canvas.style('display', 'block');
 
+  //set text properties
   textFont('Verdana');
   textStyle();
 }
 
 function labels() {
+  fill(67, 3, 111);
+  rect(0, 0, 275, 75);
+
   fill(255);
   stroke(255);
-  text("Length:",5, 20);
-  text("Angel:",5, 35);
-  text("Fraction:",5, 50);
+  var offset = 20;
+  var distance = 15;
+  text("Length:",5, offset);
+  text("Angle:",5, offset + distance);
+  text("Fraction:",5, offset + (2 * distance));
+  text("Branches:", 5, offset + (3 * distance));
+
 }
-function branch(l, t, f) {
+
+
+function branch(l, t, f, b) {
   // l = length
   // t = theta
   // f = fraction
+  // b = branches
   fill(6, 117, 31);
 
   line(0,0,0,-l);
   translate(0, -l);
+  // l < 10 : exit condition
   if (l > 10) {
-    //branch 1
-    push();
-      rotate(t);
-      branch(l*f, t, f);
-    pop();
-    //branch 2
-    push();
-      rotate(-t);
-      branch(l*f, t, f);
-    pop();
-  }
+    // 2 branches
+    if (b == 2) {
+      //branch 1
+      push();
+        rotate(t);
+        branch(l*f, t, f, b);
+      pop();
+      //branch 2
+      push();
+        rotate(-t);
+        branch(l*f, t, f, b);
+      pop();
+    }
+    // 3 branches
+    else if (b == 3) {
+      //branch 0
+      push()
+        branch(l*f, t, f, b);
+      pop();
+
+      //branch 1
+      push();
+        rotate(t);
+        branch(l*f, t, f, b);
+      pop();
+      //branch 2
+      push();
+        rotate(-t);
+        branch(l*f, t, f, b);
+      pop();
+    }
+    // 4 branches
+    else if (b == 4) {
+      //branch 1
+      push();
+        rotate(t);
+        branch(l*f, t, f, b);
+      pop();
+      //branch 2
+      push();
+        rotate(-t);
+        branch(l*f, t, f, b);
+      pop();
+
+      //branch 3
+      push();
+        rotate(t / 2);
+        branch(l*f, t, f, b);
+      pop();
+      //branch 4
+      push();
+        rotate(-t / 2);
+        branch(l*f, t, f, b);
+      pop();
+    }
+
+    }
 }
+
 
 
 
@@ -67,14 +144,22 @@ function draw() {
 
   background(0);
 
+  // set type of fractal
+  // var type = fracType.value();
+
+
   labels();
 
   //centered at bottom of screen
   var length = sliderL.value();
   var theta = sliderT.value();
   var fraction = sliderF.value();
+  var branches = sliderB.value();
 
   translate(width / 2, height);
   stroke(4, 147, 57);
-  branch(length, theta, fraction);
+
+  branch(length, theta, fraction, branches);
+
+
 }

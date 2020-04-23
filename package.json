@@ -1,7 +1,7 @@
 {
-  "name": "Final Project",
+  "name": "Fractal Viewer",
   "version": "1.0.0",
-  "description": "My Final for creative web development",
+  "description": "An interactive fractal in p5.js",
   "main": "gulpfile.js",
   "directories": {
     "doc": "doc"
@@ -10,7 +10,7 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
-  "author": "",
+  "author": "Andrew Barlow",
   "license": "ISC",
   "devDependencies": {
     "aos": "^2.3.4",
