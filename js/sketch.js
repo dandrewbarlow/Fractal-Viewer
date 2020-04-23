@@ -12,13 +12,13 @@ function windowResized() {
 function setup() {
 
   sliderL = createSlider(10, 500, 250, 10);
-  sliderL.position(50, 10);
+  sliderL.position(75, 5);
 
-  sliderT = createSlider(0.01, PI, PI / 2, PI / 16);
-  sliderT.position(50,25);
+  sliderT = createSlider(0.01, PI, PI / 2, PI / 128);
+  sliderT.position(75,22.5);
 
-  sliderF = createSlider(0, 1, 0.5, 0.01);
-  sliderF.position(50,40);
+  sliderF = createSlider(0, 0.8, 0.5, 0.001);
+  sliderF.position(75,40);
 
   var myHeight = document.documentElement.scrollHeight;
   canvas = createCanvas(windowWidth, myHeight);
@@ -26,10 +26,14 @@ function setup() {
   canvas.style('z-index', -1);
   canvas.style('position', 'absolute');
   canvas.style('display', 'block');
+
+  textFont('Verdana');
+  textStyle();
 }
 
 function labels() {
-  fill(155, 74, 246);
+  fill(255);
+  stroke(255);
   text("Length:",5, 20);
   text("Angel:",5, 35);
   text("Fraction:",5, 50);
@@ -42,7 +46,7 @@ function branch(l, t, f) {
 
   line(0,0,0,-l);
   translate(0, -l);
-  if (l > 5) {
+  if (l > 10) {
     //branch 1
     push();
       rotate(t);
@@ -60,8 +64,11 @@ function branch(l, t, f) {
 
 function draw() {
   clear();
-  labels();
+
   background(0);
+
+  labels();
+
   //centered at bottom of screen
   var length = sliderL.value();
   var theta = sliderT.value();
