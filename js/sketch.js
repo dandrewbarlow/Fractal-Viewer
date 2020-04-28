@@ -14,18 +14,20 @@ function windowResized() {
 
 function setup() {
 
+  var dist = 25;
   // Sliders for Tree settings
+  // Length
   sliderL = createSlider(10, 300, 250, 10);
   sliderL.position(75, 5);
-
-  sliderT = createSlider(0.01, PI, PI / 2, PI / 128);
-  sliderT.position(75,22.5);
-
+  // Theta
+  sliderT = createSlider(0, PI, PI / 2, PI / 128);
+  sliderT.position(75,5 + dist);
+  // Fraction
   sliderF = createSlider(0, 0.8, 0.5, 0.001);
-  sliderF.position(75,40);
-
+  sliderF.position(75,5 + (2*dist));
+  // Branches
   sliderB = createSlider(2, 4, 2, 1);
-  sliderB.position(75, 52.5);
+  sliderB.position(75, (3 * dist));
 
 
   //Radio buttons to Change fractal types
@@ -52,12 +54,12 @@ function setup() {
 
 function labels() {
   fill(67, 3, 111);
-  rect(0, 0, 275, 75);
+  rect(0, 0, 275, 110);
 
   fill(255);
   stroke(255);
-  var offset = 20;
-  var distance = 15;
+  var offset = 15;
+  var distance = 25;
   text("Length:",5, offset);
   text("Angle:",5, offset + distance);
   text("Fraction:",5, offset + (2 * distance));
@@ -93,7 +95,7 @@ function branch(l, t, f, b) {
     // 3 branches
     else if (b == 3) {
       //branch 0
-      push()
+      push();
         branch(l*f, t, f, b);
       pop();
 
